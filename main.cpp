@@ -46,6 +46,7 @@ struct Hash{
   void add(student* s){
     int index = indexinator(s->id);
     s=table[index];
+    cout << table[index]<< endl << index << endl;
   }
 
   student* find(int studentid){
@@ -63,7 +64,11 @@ struct Hash{
     find
     remove
    */
-  
+  void print(){
+    for(int i=0;i++;i<hashlen){
+      cout<<table[i]<<endl;
+    }
+  }
 };
 
 //defining functions
@@ -72,43 +77,52 @@ void print(vector<student*>& bigtest);
 void remove(vector<student*>& bigtest);
 
 int main(){
+  Hash h(100);
+  //student s;
   char command[20] = "";
 
   //define vector
-  vector<student*> bigstruct;
-
+  //  vector<student*> bigstruct;
+  
   //while the user hasn't quit the loop...
-  while(strcmp(command, "QUIT") != 0)
-    {
-      //figure out what they want to do
-      cout<< endl << "What would you like to do?" << endl;
-      cin >> command;
-
+  
+  while(strcmp(command, "QUIT") != 0){
+    //figure out what they want to do
+    cout<< endl << "What would you like to do?" << endl;
+    cin >> command;
+    
     if(strcmp(command, "ADD") == 0){
-      add(bigstruct);
+      student* s = new student();
+      strcpy(s->firstname, "fds");
+      //cout << "lastname: ";
+      strcpy(s->lastname, "ghs");
+      s->gpa = 3.6;
+      cin >> s->id;
+      h.add(s);
       
     }else if(strcmp(command, "PRINT") == 0){
-      print(bigstruct);
-
-    }else if(strcmp(command, "DELETE") == 0){
-      remove(bigstruct);
- 
+      h.print();
+      
+      //    }else if(strcmp(command, "DELETE") == 0){
+      //remove(bigstruct);
+      
     }else if(strcmp(command, "QUIT") != 0) {
-	cout << "That is not a valid command" << endl << "The valid commands are: ADD, DELETE, PRINT, or QUIT" << endl;
+      cout << "That is not a valid command" << endl << "The valid commands are: ADD, DELETE, PRINT, or QUIT" << endl;
     }
-    }
+  }
+  
   cout << "Bye bye!!!";
-
+  /*
   for (student* s : bigstruct){
     delete s;
   }
   bigstruct.clear();
-  
+  */
   return 0;
 }
 
 
-
+/*
 
 
 void add(vector<student*>& bigstruct)
@@ -157,3 +171,6 @@ void remove(vector<student*>& bigstruct)
         }
     }
 }
+
+
+*/
