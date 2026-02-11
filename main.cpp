@@ -14,6 +14,22 @@ struct student{
   float gpa;
 };
 
+//now put all student info into this hash
+struct Hash{
+  Node** table;
+  int hashsize;
+
+  /*need constructor
+    destructor
+    find
+    insert
+    hash
+    node
+    remove
+   */
+  
+}
+
 //defining functions
 void add(vector<student*>& bigtest);
 void print(vector<student*>& bigtest);
