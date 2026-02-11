@@ -25,12 +25,12 @@ struct Node{
 
 //now put all student info into this hash
 struct Hash{
-  student** table;
+  Node** table;
   int hashlen;
 
   Hash(int len){
     hashlen = len;
-    table = new student*[hashlen];
+    table = new Node*[hashlen];
 
     //going thru and defining everything (as null)
     for (int i = 0; i<hashlen; i++){
@@ -45,15 +45,17 @@ struct Hash{
 
   void add(student* s){
     int index = indexinator(s->id);
-    s=table[index];
-    cout << table[index]<< endl << index << endl;
+    Node* node = new Node(s);
+    node->next = table[index];
+    table[index] = node;
+    cout << node->info->firstname;
   }
 
   student* find(int studentid){
     int index = indexinator(studentid);
-    while (table[index] != NULL){
-      if(table[index]->id == studentid){
-	return table[index];
+    while (table[index]->info != NULL){
+      if(table[index]->info->id == studentid){
+	return table[index]->info;
       }
       index = (index + 1)%hashlen;
     }
@@ -65,8 +67,11 @@ struct Hash{
     remove
    */
   void print(){
-    for(int i=0;i++;i<hashlen){
-      cout<<table[i]<<endl;
+    for(int i=0;i<hashlen;i++){
+    Node* node = table[i];
+
+      //      cout << table[i]->info->firstname << endl << i << endl;
+      cout<< node->info->id<<endl;
     }
   }
 };
