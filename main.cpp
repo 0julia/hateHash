@@ -10,25 +10,61 @@ using namespace std;
 struct student{
   char firstname[40];
   char lastname[40];
-  int studentid;
+  int id;
   float gpa;
+};
+
+struct Node{
+  student* info;
+  Node* next;
+  Node(student* s){
+    info = s;
+    next = NULL;
+  }
 };
 
 //now put all student info into this hash
 struct Hash{
-  Node** table;
-  int hashsize;
+  student** table;
+  int hashlen;
 
-  /*need constructor
+  Hash(int len){
+    hashlen = len;
+    table = new student*[hashlen];
+
+    //going thru and defining everything (as null)
+    for (int i = 0; i<hashlen; i++){
+      table[i] = NULL;
+    }
+  }
+  ~Hash(){}
+
+  indexinator(int id){
+    return id % hashlen;
+  }
+
+  void add(student* s){
+    int index = indexinator(s->id);
+    s=table[index];
+  }
+
+  student* find(int studentid){
+    int index = indexinator(studentid);
+    while (table[index] != NULL){
+      if(table[index]->id == studentid){
+	return table[index];
+      }
+      index = (index + 1)%hashlen;
+    }
+    return NULL;
+  }
+  /*need 
     destructor
     find
-    insert
-    hash
-    node
     remove
    */
   
-}
+};
 
 //defining functions
 void add(vector<student*>& bigtest);
@@ -88,7 +124,7 @@ void add(vector<student*>& bigstruct)
       cin >> littlestruct->lastname;
 
       cout << "What is the student's ID?" << endl;
-      cin >> littlestruct->studentid;
+      cin >> littlestruct->id;
 
       cout << "What is the student's GPA?" << endl;
       cin >> littlestruct->gpa;
@@ -101,18 +137,18 @@ void add(vector<student*>& bigstruct)
 void print(vector<student*>& bigstruct)
 {
   for (size_t i = 0; i < bigstruct.size(); ++i) {
-    cout << "Name: " << bigstruct[i]->firstname << " " << bigstruct[i]->lastname << ", Student ID: " << bigstruct[i]->studentid << ", Student's GPA: " << fixed << setprecision(2) << bigstruct[i]->gpa << endl;
+    cout << "Name: " << bigstruct[i]->firstname << " " << bigstruct[i]->lastname << ", Student ID: " << bigstruct[i]->id << ", Student's GPA: " << fixed << setprecision(2) << bigstruct[i]->gpa << endl;
   }
 }
 
 void remove(vector<student*>& bigstruct)
 {
-        int id;
+        int studentid;
       cout << "What is the ID of the student you would like to delete?" << endl;
-      cin >> id;
+      cin >> studentid;
       auto it = bigstruct.begin();
     while (it != bigstruct.end()) {
-      if ((*it)->studentid == id) {
+      if ((*it)->id == studentid) {
 	delete *it;
             it = bigstruct.erase(it); // Erase the element and get a new iterator
             break; // Assuming only one element needs to be removed
