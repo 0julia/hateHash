@@ -1,8 +1,11 @@
 #include <iostream>
 #include <cstring>    // For strcmp()
-#include <cmath>
-#include <vector>
-#include <iomanip>
+#include <random>
+#include <fstream>
+
+//#include <cmath>
+//#include <vector>
+//#include <iomanip>
 
 using namespace std;
 
@@ -48,8 +51,7 @@ struct Hash{
     Node* node = new Node(s);
     node->next = table[index];
     table[index] = node;
-    cout << node->info->firstname;
-  }
+    }
 
   student* find(int studentid){
     int index = indexinator(studentid);
@@ -61,57 +63,75 @@ struct Hash{
     }
     return NULL;
   }
-  /*need 
+  /*need
     destructor
     find
     remove
    */
   void print(){
+    cout << "List:"<<endl;
     for(int i=0;i<hashlen;i++){
-    Node* node = table[i];
-
-      //      cout << table[i]->info->firstname << endl << i << endl;
-      cout<< node->info->id<<endl;
+      if (table[i] != NULL){
+	cout << "      " << table[i]->info->firstname << ", " << table[i]->info->lastname << ", "  << table[i]->info->gpa << ", " << table[i]->info->id << endl;
+      }
     }
   }
 };
 
 //defining functions
-void add(vector<student*>& bigtest);
-void print(vector<student*>& bigtest);
-void remove(vector<student*>& bigtest);
 
 int main(){
   Hash h(100);
-  //student s;
   char command[20] = "";
 
-  //define vector
-  //  vector<student*> bigstruct;
-  
   //while the user hasn't quit the loop...
-  
-  while(strcmp(command, "QUIT") != 0){
+  while(strcmp(command, "quit") != 0){
     //figure out what they want to do
-    cout<< endl << "What would you like to do?" << endl;
+    cout<< endl << "What would you like to do? ";
     cin >> command;
-    
-    if(strcmp(command, "ADD") == 0){
+
+    if(strcmp(command, "add") == 0){
+      //student* s new student();
+      //s->firstname;
+      
+      //random GPA
+      float r3 = static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(4.00)));
+      float randGPA = round(r3*100.0)/100.0;
+
+      //random ID
+      int randID=0;
+      while (randID < 100000){
+	randID = rand() % 1000000;
+      }
+
+      fstream f("first.txt"); //open your word list
+      for(int i = 1; 1<= 6; i++){
+      if(f){
+      char buffer[150];
+      f.getline(buffer, sizeof(buffer));
+      cout <<buffer;
+      //f.close();
+      }
+      }
+      cout << randGPA << ", " << randID;
+      //h.add(s);
+    }
+    else if(strcmp(command, "manualAdd") == 0){
       student* s = new student();
-      strcpy(s->firstname, "fds");
-      //cout << "lastname: ";
-      strcpy(s->lastname, "ghs");
-      s->gpa = 3.6;
+      cout << "     First Name: ";
+      cin >> s->firstname;
+      cout << "     Last Name: ";
+      cin >> s->lastname;
+      cout << "     GPA: ";
+      cin >> s->gpa;
+      cout << "     Student ID: ";
       cin >> s->id;
       h.add(s);
       
-    }else if(strcmp(command, "PRINT") == 0){
+    }else if(strcmp(command, "print") == 0){
       h.print();
       
-      //    }else if(strcmp(command, "DELETE") == 0){
-      //remove(bigstruct);
-      
-    }else if(strcmp(command, "QUIT") != 0) {
+    }else if(strcmp(command, "quit") != 0) {
       cout << "That is not a valid command" << endl << "The valid commands are: ADD, DELETE, PRINT, or QUIT" << endl;
     }
   }
