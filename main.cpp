@@ -230,7 +230,7 @@ int main(){
 
       }
     }
-    else if(strcmp(command, "m") == 0){
+    else if(strcmp(command, "manualAdd") == 0){
       student* s = new student();
       cout << "     First Name: ";
       cin >> s->firstname;
