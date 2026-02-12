@@ -77,7 +77,6 @@ struct Hash{
     //if there are already 3 things linked in the index
     if (table[index] != NULL){
       Node* temp = table[index];
-      cout << "IN!!!" << endl;
       int num=2;
       while(temp->next != NULL){
 	num++;
@@ -88,6 +87,7 @@ struct Hash{
 	cout << "congradulations!!! you've managed to (try) to add 4 nodes to the same index!"<<endl;
 	cout << index<<endl;
 	rehash();
+	int index = indexinator(s->id);
       }
       //Node* node = table[index];
       //count how many nodes are in the list
@@ -98,11 +98,34 @@ struct Hash{
   }
 
   void rehash(){
-    for(int i=0;i<=hashlen;i++){
+    //make new table
+    Node** oldtable = table;
+    int oldlen = hashlen;
+    hashlen = 2*hashlen;
+    table = new Node*[hashlen];
 
+    
+    //going thru and defining everything (as null)
+    for (int i = 0; i<hashlen; i++){
+      table[i] = NULL;
     }
+    
+    //take old indexes and add it to new one
+    for(int i=0;i<oldlen;i++){
+      Node* node = oldtable[i];
+      
+      while (node != NULL){
+	add(node->info);
+	node=node->next;
+      }
+    }
+
+    //clear data
+    delete[] oldtable;
+    cout << "rehashed!!!"<<endl;
   }
 
+  
   void print(){
     cout << "List:"<<endl;
     for(int i=0;i<hashlen;i++){
