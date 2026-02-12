@@ -99,7 +99,22 @@ struct Hash{
   void remove(int delID){
     int index = indexinator(delID);
     Node* node = table[index];
-    
+    Node* before = NULL;
+    while (node != NULL){
+      if(node->info->id == delID){
+	if(before==NULL){//if first thing in list
+	  table[index]=node->next;
+	}else{
+	  before->next=node->next;//cutting the middle thing out;
+	}
+	delete node->info;
+	delete node;
+	return;
+	
+      }
+      before = node;
+      node= node->next;
+    }
     cout << "An error has occured, we are unable to remove that...item" << endl;
   }
 };
