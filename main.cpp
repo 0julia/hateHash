@@ -40,8 +40,20 @@ struct Hash{
       table[i] = NULL;
     }
   }
-  ~Hash(){}
+  ~Hash(){
+    for (int i=0;i<hashlen;i++){
+      Node* node = table[i];
 
+      while(node != NULL){
+	Node* next = node->next;
+	delete node->info;
+	delete node;
+	node = next;
+      }
+    }
+    delete[] table;
+  }
+  
   indexinator(int id){
     return id % hashlen;
   }
@@ -58,9 +70,8 @@ struct Hash{
     return NULL;
   }
   /*need
-    destructor
     remove
-   */
+  */
 
   void add(student* s){
     int index = indexinator(s->id);
@@ -87,7 +98,9 @@ struct Hash{
 
   void remove(int delID){
     int index = indexinator(delID);
-    cout << "An error has occured, you are unable to remove that...item" << endl;
+    Node* node = table[index];
+    
+    cout << "An error has occured, we are unable to remove that...item" << endl;
   }
 };
 
