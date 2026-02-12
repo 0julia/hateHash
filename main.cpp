@@ -46,12 +46,6 @@ struct Hash{
     return id % hashlen;
   }
 
-  void add(student* s){
-    int index = indexinator(s->id);
-    Node* node = new Node(s);
-    node->next = table[index];
-    table[index] = node;
-    }
 
   student* find(int studentid){
     int index = indexinator(studentid);
@@ -65,19 +59,35 @@ struct Hash{
   }
   /*need
     destructor
-    find
     remove
    */
+
+  void add(student* s){
+    int index = indexinator(s->id);
+    Node* node = new Node(s);
+    node->next = table[index];
+    table[index] = node;
+  }
+
   void print(){
     cout << "List:"<<endl;
     for(int i=0;i<hashlen;i++){
-      if (table[i] != NULL){
-	cout << "      First Name: " << table[i]->info->firstname << endl;
-	cout << "      Last Name:  " << table[i]->info->lastname << endl;
-	cout << "      GPA:        " << table[i]->info->gpa << endl;
-	cout << "      ID:         " << table[i]->info->id << endl << endl;
+      Node* node = table[i];
+      while (node != NULL){
+	cout << "      First Name: " << node->info->firstname << endl;
+	cout << "      Last Name:  " << node->info->lastname << endl;
+	cout << "      GPA:        " << node->info->gpa << endl;
+	cout << "      ID:         " << node->info->id << endl << endl;
+
+	node = node->next;
+      
       }
     }
+  }
+
+  void remove(int delID){
+    int index = indexinator(delID);
+    cout << "An error has occured, you are unable to remove that...item" << endl;
   }
 };
 
@@ -161,18 +171,18 @@ int main(){
     }else if(strcmp(command, "print") == 0){
       h.print();
       
+    }else if(strcmp(command, "delete") == 0){
+      int delID;
+      cout << "What is the ID of the student you would like to...delete? ";
+      cin >> delID;
+      h.remove(delID);
     }else if(strcmp(command, "quit") != 0) {
-      cout << "That is not a valid command" << endl << "The valid commands are: ADD, DELETE, PRINT, or QUIT" << endl;
+      cout << "That is not a valid command" << endl << "The valid commands are: add, manualAdd, delete, print, or quit" << endl;
     }
   }
   
   cout << "Bye bye!!!";
-  /*
-  for (student* s : bigstruct){
-    delete s;
-  }
-  bigstruct.clear();
-  */
+  
   return 0;
 }
 
