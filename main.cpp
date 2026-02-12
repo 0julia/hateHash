@@ -69,15 +69,38 @@ struct Hash{
     }
     return NULL;
   }
-  /*need
-    remove
-  */
+
 
   void add(student* s){
     int index = indexinator(s->id);
     Node* node = new Node(s);
+    //if there are already 3 things linked in the index
+    if (table[index] != NULL){
+      Node* temp = table[index];
+      cout << "IN!!!" << endl;
+      int num=2;
+      while(temp->next != NULL){
+	num++;
+	temp=temp->next;
+      }
+      //if 3 things in list, hash, else reset
+      if (num == 4){
+	cout << "congradulations!!! you've managed to (try) to add 4 nodes to the same index!"<<endl;
+	cout << index<<endl;
+	rehash();
+      }
+      //Node* node = table[index];
+      //count how many nodes are in the list
+    
+    }
     node->next = table[index];
     table[index] = node;
+  }
+
+  void rehash(){
+    for(int i=0;i<=hashlen;i++){
+
+    }
   }
 
   void print(){
@@ -147,7 +170,7 @@ int main(){
 	float randGPA = round(r3*100.0)/100.0;
 
 	//random ID
-	int randID=0;
+	int randID = 1;
 	while (randID < 100000){
 	  randID = rand() % 1000000;
 	}
@@ -184,7 +207,7 @@ int main(){
 
       }
     }
-    else if(strcmp(command, "manualAdd") == 0){
+    else if(strcmp(command, "m") == 0){
       student* s = new student();
       cout << "     First Name: ";
       cin >> s->firstname;
