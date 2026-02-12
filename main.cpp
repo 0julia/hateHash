@@ -72,7 +72,10 @@ struct Hash{
     cout << "List:"<<endl;
     for(int i=0;i<hashlen;i++){
       if (table[i] != NULL){
-	cout << "      " << table[i]->info->firstname << ", " << table[i]->info->lastname << ", "  << table[i]->info->gpa << ", " << table[i]->info->id << endl;
+	cout << "      First Name: " << table[i]->info->firstname << endl;
+	cout << "      Last Name:  " << table[i]->info->lastname << endl;
+	cout << "      GPA:        " << table[i]->info->gpa << endl;
+	cout << "      ID:         " << table[i]->info->id << endl << endl;
       }
     }
   }
@@ -81,9 +84,11 @@ struct Hash{
 //defining functions
 
 int main(){
+  srand(time(NULL));
   Hash h(100);
   char command[20] = "";
-
+  int listlen=20; //number of names there are in the lists
+  
   //while the user hasn't quit the loop...
   while(strcmp(command, "quit") != 0){
     //figure out what they want to do
@@ -91,30 +96,55 @@ int main(){
     cin >> command;
 
     if(strcmp(command, "add") == 0){
-      //student* s new student();
-      //s->firstname;
+      int copies;
+      cout << "How many names? ";
+      cin >> copies;
+
+      for (int j=0;j<copies;j++){
+	student* s = new student();
+	s->firstname;
       
-      //random GPA
-      float r3 = static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(4.00)));
-      float randGPA = round(r3*100.0)/100.0;
+	//random GPA
+	float r3 = static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(4.00)));
+	float randGPA = round(r3*100.0)/100.0;
 
-      //random ID
-      int randID=0;
-      while (randID < 100000){
-	randID = rand() % 1000000;
-      }
+	//random ID
+	int randID=0;
+	while (randID < 100000){
+	  randID = rand() % 1000000;
+	}
 
-      fstream f("first.txt"); //open your word list
-      for(int i = 1; 1<= 6; i++){
-      if(f){
-      char buffer[150];
-      f.getline(buffer, sizeof(buffer));
-      cout <<buffer;
-      //f.close();
+      
+	//random first name
+	fstream f("first.txt"); //open your word list
+	//the location of the random firstname you are using
+	int firstloc = rand() % listlen;
+	char buffer[150];
+	for(int i = 1; i<= firstloc; i++){
+	  if(f){
+	    f.getline(buffer, sizeof(buffer));
+	  }
+	}
+
+	//random last name
+	fstream l("last.txt"); //open your word list
+	//the location of the random firstname you are using
+	int lastloc = rand() % listlen;
+	char otherbuffer[150];
+	for(int i = 1; i<= lastloc; i++){
+	  if(l){
+	    l.getline(otherbuffer, sizeof(otherbuffer));
+	  }
+	}
+	strcpy(s->firstname, buffer);
+	strcpy(s->lastname, otherbuffer);
+	s->gpa=randGPA;
+	s->id=randID;
+	//cout << randGPA << ", " << randID << ", " <<buffer << endl << " " << otherbuffer << endl;
+
+	h.add(s);
+
       }
-      }
-      cout << randGPA << ", " << randID;
-      //h.add(s);
     }
     else if(strcmp(command, "manualAdd") == 0){
       student* s = new student();
