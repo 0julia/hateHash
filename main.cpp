@@ -168,11 +168,12 @@ struct Hash{
 //defining functions
 
 int main(){
+  int randID = 100000;
   srand(time(NULL));
   Hash h(100);
   char command[20] = "";
   int listlen=20; //number of names there are in the lists
-  
+  cout << "Commands are add, manualAdd, quit, delete, print" << endl;  
   //while the user hasn't quit the loop...
   while(strcmp(command, "quit") != 0){
     //figure out what they want to do
@@ -193,10 +194,7 @@ int main(){
 	float randGPA = round(r3*100.0)/100.0;
 
 	//random ID
-	int randID = 1;
-	while (randID < 100000){
-	  randID = rand() % 1000000;
-	}
+	randID +=1;
 
       
 	//random first name
@@ -255,61 +253,7 @@ int main(){
     }
   }
   
-  cout << "Bye bye!!!";
+  cout << "Segmentation fault";
   
   return 0;
 }
-
-
-/*
-
-
-void add(vector<student*>& bigstruct)
-{
-  cout << "You just added a student to the repository" << endl;
-  
-      student* littlestruct = new student();
-
-      cout << "What is the student's first name?" << endl;
-      cin >> littlestruct->firstname;
-
-      cout << "What is the student's last name?" << endl;
-      cin >> littlestruct->lastname;
-
-      cout << "What is the student's ID?" << endl;
-      cin >> littlestruct->id;
-
-      cout << "What is the student's GPA?" << endl;
-      cin >> littlestruct->gpa;
-
-      bigstruct.push_back(littlestruct);
-
-      //  return bigtest;
-}
-
-void print(vector<student*>& bigstruct)
-{
-  for (size_t i = 0; i < bigstruct.size(); ++i) {
-    cout << "Name: " << bigstruct[i]->firstname << " " << bigstruct[i]->lastname << ", Student ID: " << bigstruct[i]->id << ", Student's GPA: " << fixed << setprecision(2) << bigstruct[i]->gpa << endl;
-  }
-}
-
-void remove(vector<student*>& bigstruct)
-{
-        int studentid;
-      cout << "What is the ID of the student you would like to delete?" << endl;
-      cin >> studentid;
-      auto it = bigstruct.begin();
-    while (it != bigstruct.end()) {
-      if ((*it)->id == studentid) {
-	delete *it;
-            it = bigstruct.erase(it); // Erase the element and get a new iterator
-            break; // Assuming only one element needs to be removed
-        } else {
-            ++it;
-        }
-    }
-}
-
-
-*/
