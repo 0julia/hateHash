@@ -54,7 +54,7 @@ struct Hash{
     delete[] table;
   }
   
-  indexinator(int id){
+  int indexinator(int id){
     return id % hashlen;
   }
 
